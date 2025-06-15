@@ -1,13 +1,16 @@
 import {
   CopilotRuntime,
-  OpenAIAdapter,
+  AnthropicAdapter,
   copilotRuntimeNextJSAppRouterEndpoint,
 } from "@copilotkit/runtime";
 import { NextRequest } from "next/server";
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
 
-const openai = new OpenAI();
-const serviceAdapter = new OpenAIAdapter({ openai });
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
+
+const serviceAdapter = new AnthropicAdapter({ anthropic });
 
 const runtime = new CopilotRuntime({
   remoteEndpoints: [{ url: "http://localhost:8000/copilotkit_remote" }],
